@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #034078;
+    text-align: center;
+}
+.con{
+    margin-left: 500px;
+    margin-top: 25px;
+    height: 500px;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #1282A2;
+    gap: 5px;
+}
+.box{
+    height: 150px;
+    width: 150px;
+    background-color: #034078;
+    font-size: 50px;
+}
+h1{
+    color: antiquewhite;
+}
+#newbtn{
+    height: 40px;
+    width: 80px;
+    margin-top: 20px;
+    background-color: #919169;
+}
+.hide{
+    display: none;
+}
+.dis{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: #919169;
+    gap: 5px;
+}
+    </style>
+    <h1>TIC TAC TOE</h1>
+    <div class="dis hide">
+        <p id="msg"></p>
+    </div>
+    <div class="con">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+    </div>
+    <button id="newbtn">New Game</button>
+    <script>
+        let boxs=document.querySelectorAll(".box");
+let turnx=true;
+let newbtn=document.querySelector("#newbtn");
+let dis=document.querySelector(".dis");
+let msg=document.querySelector("#msg");
+boxs.forEach((bo)=>{
+    bo.addEventListener("click",()=>{
+        if(turnx){
+            bo.innerText="X";
+            bo.style.color=" #e68210";
+            turnx=false;
+        }
+        else{
+            bo.innerText="O";
+            bo.style.color="beige"
+            turnx=true;
+        }
+    bo.disabled=true;
+    c+=1;
+    iswinner=checkwinner();
+    if(c==9 && !iswinner){
+        draw();
+    }
+    });
+});
+const draw=()=>{
+    msg.innerText=`It is a draw`;
+}
+const winpatterns=[
+    [0,1,2],
+    [0,3,6],
+    [0,4,8],
+    [1,4,7],
+    [2,5,8],
+    [2,4,6],
+    [3,4,5],
+    [6,7,8],
+];
+const disbox=()=>{
+    for(let box of boxs){
+        box.disabled=true;
+    }
+};
+const enbox=()=>{
+    for(let box of boxs){
+        box.disabled=false;
+        box.innerText="";
+    }
+};
+const nebtn=()=>{
+    c=0;
+    enbox();
+    dis.classList.add("hide");
+};
+const showwinner=(win)=>{
+
+    msg.innerText=`Winner is ${win}`;
+    dis.classList.remove("hide");
+    disbox();
+};
+const checkwinner=()=>{
+    for(let pattern of winpatterns){
+        let pos1=boxs[pattern[0]].innerText;
+        let pos2=boxs[pattern[1]].innerText;
+        let pos3=boxs[pattern[2]].innerText;
+    if(pos1!="" && pos2!=""&&pos3!=""){
+        if(pos1==pos2 && pos2==pos3){
+            showwinner(pos1);
+            return true;
+            }
+        }
+    }
+};
+newbtn.addEventListener("click",nebtn);
+
+    </script>
+</body>
+</html>
